@@ -32,16 +32,29 @@
             left: 0;
             right: 0;
             z-index: 50;
-            padding: 1.5rem;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            min-height: 70px;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            height: 100%;
         }
+
+        .logo img {
+            height: 50px;
+            max-height: 54px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
 
         .menu-btn {
             background: rgba(255, 255, 255, 0.1);
@@ -60,9 +73,9 @@
 
         .menu {
             position: absolute;
-            top: 5rem;
-            left: 1.5rem;
+            top: 70px;
             right: 1.5rem;
+            width: 250px;
             background: rgba(30, 41, 59, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 0.5rem;
@@ -119,6 +132,34 @@
             max-width: 1200px;
             width: 100%;
         }
+
+        /* Scrollable slide content for sections with more content */
+        .slide-content.scrollable {
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 1rem;
+        }
+
+        /* Custom scrollbar styling */
+        .slide-content.scrollable::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content.scrollable::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .slide-content.scrollable::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .slide-content.scrollable::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
 
         /* Slide Indicators */
         .indicators {
@@ -200,6 +241,56 @@
             line-height: 1.75;
         }
 
+        /* Welcome slide background image */
+        .welcome-slide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        /* Image + Text side by side */
+        .intro-row {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .intro-image {
+            width: 280px;
+            min-width: 280px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .intro-text {
+            flex: 1;
+        }
+
+        @media (max-width: 600px) {
+            .intro-row {
+                flex-direction: column;
+            }
+
+            .intro-image {
+                width: 100%;
+                min-width: 100%;
+                height: 180px;
+            }
+        }
+
         .btn {
             background: #2563eb;
             color: white;
@@ -225,6 +316,248 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Collapsible Card Styles - Modal Popup Version */
+        .collapsible-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .collapsible-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .collapsible-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .collapsible-header h3 {
+            margin: 0;
+        }
+
+        .collapsible-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .collapsible-card.active .collapsible-icon {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            display: none;
+        }
+
+        /* Modal Popup Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b 0%, #1e40af 50%, #1e293b 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.75rem;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            color: #d1d5db;
+        }
+
+        /* Custom scrollbar for modal */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hierarchy-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem auto;
+            display: block;
+            border-radius: 0.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hierarchy-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 0.3s ease-in-out;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 2rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         .grid {
             display: grid;
             gap: 1.5rem;
@@ -239,48 +572,45 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(147, 51, 234, 0.3));
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 0.5rem;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
+            color: #60a5fa;
             margin-bottom: 0.5rem;
         }
 
         .stat-label {
-            font-size: 1.25rem;
+            font-size: 1.125rem;
+            color: #d1d5db;
         }
 
-        .career-card {
+        .timeline-item {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 0.5rem;
             padding: 1.5rem;
-            transition: background 0.3s;
-        }
-
-        .career-card:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .career-tags {
-            display: flex;
-            gap: 1rem;
             margin-bottom: 1rem;
-            font-size: 0.875rem;
         }
 
-        .tag {
-            background: rgba(37, 99, 235, 0.5);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
+        .year {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 0.5rem;
         }
 
         .gallery-grid {
@@ -301,6 +631,18 @@
             font-size: 3rem;
             color: rgba(255, 255, 255, 0.3);
             transition: transform 0.3s;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .gallery-item:hover {
@@ -319,6 +661,72 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Impact Cards Styles */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .impact-card {
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .impact-card h4 {
+            margin-bottom: 1rem;
+            color: #fff;
+            font-size: 1.25rem;
+        }
+
+        .preview-text {
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .full-text {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .full-text p {
+            margin-bottom: 0.5rem;
+        }
+
+        .read-more-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .read-more-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+        }
+
+        .read-more-btn.active {
+            background: rgba(37, 99, 235, 0.8);
+            border-color: #2563eb;
+        }
+
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -331,6 +739,12 @@
             .slide {
                 padding: 1rem;
             }
+
+            .menu {
+                right: 1rem;
+                left: 1rem;
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -338,13 +752,15 @@
     <div class="container">
         <!-- Navigation -->
         <nav>
-            <div class="logo">B&CC Logo</div>
+            <div class="logo">
+                <img src="your-logo.png" alt="B&CC Logo">
+            </div>
             <button class="menu-btn" onclick="toggleMenu()">☰</button>
         </nav>
 
         <div class="menu" id="menu">
             <button class="menu-item active" onclick="goToSlide(0)">Welcome</button>
-            <button class="menu-item" onclick="goToSlide(1)">Department</button>
+            <button class="menu-item" onclick="goToSlide(1)">About PSG Institutes</button>
             <button class="menu-item" onclick="goToSlide(2)">About Us</button>
             <button class="menu-item" onclick="goToSlide(3)">Impact</button>
             <button class="menu-item" onclick="goToSlide(4)">Careers</button>
@@ -357,37 +773,117 @@
             <!-- Slide 1: Welcome -->
             <div class="slide">
                 <div class="slide-content" style="text-align: center;">
-                    <h1>Welcome to Branding & Coorporate Communication</h1>
+                
+                <img src="your-welcome-bg.jpg" alt="" class="welcome-bg-image">
+                <div class="slide-content" style="text-align: center; position: relative; z-index: 2;">
+                
+                    <h1>Welcome to Branding & Corporate Communication</h1>
                     <p style="font-size: 1.5rem; margin-bottom: 2rem;">Driving innovation and excellence in everything we do</p>
                     <button class="btn" onclick="nextSlide()">Explore More</button>
+                
+                </div>
                 </div>
             </div>
 
             <!-- Slide 2: Department -->
             <div class="slide">
-                <div class="slide-content">
-                    <h2>About PSG Institutes</h2>
-                    <p style="margin-bottom: 1rem;">
-                        Get from Hari Sir
-                    </p>
+                <div class="slide-content scrollable">
+                    <h2>About PSG Institutions</h2>
+                    <div class="intro-row">
+                    <img src="institutes.jpg" alt="PSG Institutions" class="intro-image">
+                    <p>PSG & Sons' Charities is a manifestation of the founders’ collective vision, one rooted in service, inclusivity, and excellence. Their mission to make education accessible for all led to the birth of Sarvajana School in 1924, which is now guiding a generation of learners. Over a century, this spirit of service founded a diverse range of institutions, shaping PSG’s enduring legacy.
+                        <br>Started in 1947, PSG College of Arts and Science took arts and science education to the next level by hosting the IIC regional meet—a first in the history of arts colleges.</p>
+                    </div>
+                    <p style="margin-top: 1rem;">PSG College of Technology, founded in 1951, has elevated engineering education by seamlessly integrating industry and academia, preparing students to meet global engineering and technological standards.</p>
+                    <p style="margin-top: 1rem;">Established in 1985, the PSG Institute of Medical Sciences and Research is advancing healthcare by aligning education, research, and clinical practice to achieve medical excellence. In 1989, PSG Hospitals opened doors to holistic healthcare with state-of-the-art technology, experienced medical professionals, and patient-centred care.</p>
+                    <p style="margin-top: 1rem;">In management education, PSG Institute of Management (1994) and PSG Institute of Advanced Studies (2006) are shaping future leaders through robust academic foundation and real-world business exposure.</p>
+                    <p style="margin-top: 1rem;">PSG Convention Centre presents a world-class venue for high-calibre events, while PSG GRD Museum of Science and Technology fosters scientific curiosity and innovation.</p>
+                    <p style="margin-top: 1rem;">After a century of institutional excellence, PSG emerged as a trusted ecosystem that empowers society with education, healthcare, and service. With a far-reaching presence across education, healthcare and innovation, PSG institutions continue shaping lives and transforming communities.</p>
+                    
+                            
                 </div>
             </div>
 
             <!-- Slide 3: About Us -->
             <div class="slide">
-                <div class="slide-content">
+                <div class="slide-content scrollable">
                     <h2>About Our Department</h2>
-                    <div class="card">
-                        <h3>Who We Are</h3>
-                        <p>A dedicated team of professionals passionate about innovation and excellence in our field.</p>
+                    
+                    <!-- Who We Are - Collapsible -->
+                    <div class="collapsible-card" id="whoWeAre">
+                        <div class="collapsible-header" onclick="toggleCollapsible('whoWeAre')">
+                            <h3>Who We Are</h3>
+                            <span class="collapsible-icon">▼</span>
+                        </div>
+                        <div class="collapsible-content">
+                            <p> The Branding and Corporate Communication (B&CC) is the heart of every story, voice, and visual that defines PSG & Sons' Charities. As a team, we ensure every hoarding, brochure and banner speaks the same language of PSG's educational excellence and societal service.</p>
+                            <p style="margin-top: 1rem;">In B&CC, communication is treated not as a mere announcement, but as an opportunity to deepen the story of PSG and strengthen cherished bonds with those who learn, work, and partner with us. As PSG’s unwavering voice, B&CC showcases every stride of PSG's transformative journey towards nation building and community welfare.</p>
+                            <p style="margin-top: 1rem;">From steering promotional initiatives across campuses to co-ordinating placement support and training for PSG College of Pharmacy, PSG College of Arts & Science, and PSG Institute of Management, we turn milestones into inspiring narratives. Every PSG event, achievement, and institutional agenda is captured with precision and a flair that echoes far beyond our gates. In summary, we are the cornerstone behind PSG's distinctive presence across every medium.</p>
+                            </div>
                     </div>
-                    <div class="card">
-                        <h3>Our Impact</h3>
-                        <p>We've successfully delivered over 500 projects, impacting millions of users worldwide.</p>
+
+                    <!-- Our Impact - Collapsible -->
+                    <div class="collapsible-card" id="ourImpact">
+                        <div class="collapsible-header" onclick="toggleCollapsible('ourImpact')">
+                            <h3>Our Impact</h3>
+                            <span class="collapsible-icon">▼</span>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="impact-grid">
+                                <!-- Card 1 -->
+                                <div class="impact-card">
+                                    <h4>Representing PSG's Legacy</h4>
+                                    <p class="preview-text">For a century and beyond, PSG & Sons' Charities has stood for education, healthcare and service that has enriched millions of lives.</p>
+                                    <div class="full-text" style="display: none;">
+                                        <p>For a century and beyond, PSG & Sons’ Charities has stood for education, healthcare and service, elevating millions of lives. ​The Branding and Corporate Communication department (B&CC) is a part of this legacy, shaping how PSG's philanthropy and institutional heritage are seen, understood and remembered.</p>
+                                        <p style="margin-top: 1rem;">Our team articulates the ongoing legacy of PSG, inspiring countless students, alumni, and communities empowered by PSG to embody its transformative spirit. Through exemplary works like our coffee table book Visionaries of Coimbatore, we chronicle PSG's founding history alongside its achievements—highlighting campus expansions and sustained advancements in infrastructure and technology.</p>
+                                    </div>
+                                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="impact-card">
+                                    <h4>Spotlighting Milestones</h4>
+                                    <p class="preview-text">B&CC plays the pivotal role of sustaining PSG's vibrant community through consistent engagement and storytelling.</p>
+                                    <div class="full-text" style="display: none;">
+                                        <p> B&CC plays the pivotal role of sustaining PSG's vibrant community through consistent engagement and storytelling that connects classrooms, health and research centres and alumni near and far.</p>
+                                        <p style="margin-top: 1rem;">We spotlight institutional foundation days, jubilees and academic triumphs such that the centenary legacy of PSG resonates in every frame and headline. Whether it is elevating academic distinction, documenting path-breaking research, or amplifying placement success, we ensure PSG’s mission is portrayed with clarity and purpose.</p>
+                                    </div>
+                                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="impact-card">
+                                    <h4>Amplifying Our Reach</h4>
+                                    <p class="preview-text">Our impact is palpable in press releases, editorials, and magazine features, where every piece conveys PSG's commitment to education, research, and community engagement.</p>
+                                    <div class="full-text" style="display: none;">
+                                        <p>Our impact is palpable in press releases, editorials and magazine features, where every piece conveys PSG's commitment to education, research and community engagement.</p>
+                                        <p style="margin-top: 1rem;">The invitations, radio messages and event creatives exemplify the prominence of PSG's conferences, orientations and flagship sport events for the PSG Trophy.</p>
+                                        <p style="margin-top: 1rem;">Our city-wide campaigns and out-of-home advertisements highlight our celebrations and achievements, while our social media posts and magazines extend PSG's vision far and wide to students, alumni, and communities.</p>
+                                    </div>
+                                    <button class="read-more-btn" onclick="toggleReadMore(this)">Read More</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card">
-                        <h3>Our Hierarchy</h3>
-                        <p>Led by experienced directors and supported by talented managers and team members across all levels.</p>
+
+                    <!-- Our Hierarchy - Collapsible with Image -->
+                    <div class="collapsible-card" id="ourHierarchy">
+                        <div class="collapsible-header" onclick="toggleCollapsible('ourHierarchy')">
+                            <h3>Our Hierarchy</h3>
+                            <span class="collapsible-icon">▼</span>
+                        </div>
+                        <div class="collapsible-content">
+                            <p>Led by experienced director and supported by talented managers and team members across all levels. Our organizational structure promotes collaboration and efficient decision-making.</p>
+                            
+                            <!-- Hierarchy Image -->
+                            <!-- Replace 'your-hierarchy-image.jpg' with your actual image file -->
+                            <img src="Careers_landing_page.jpg" alt="Department Hierarchy Chart" class="hierarchy-image" onclick="openLightbox(this.src)">
+                            
+                            <p style="margin-top: 1rem; font-size: 0.875rem; color: #9ca3af; text-align: center;">
+                                Click image to view full screen
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -395,7 +891,7 @@
             <!-- Slide 4: Impact -->
             <div class="slide">
                 <div class="slide-content">
-                    <h2>The Importance of Our Department</h2>
+                    <h2>The Impact of Our Department</h2>
                     <div class="grid grid-2">
                         <div class="stat-card">
                             <div class="stat-number">50000+</div>
@@ -421,8 +917,8 @@
             <div class="slide">
                 <div class="slide-content">
                     <h2 style="text-align: center;">Join Our Team</h2>
-                        Don't see the right fit? Send us your resume at careers@company.com
-                    </p>
+                    <p style="text-align: center; margin-bottom: 2rem; color: #d1d5db;">Explore exciting career opportunities and become part of our amazing team</p>
+                    <a href="Career_page.html" class="btn" style="width: auto; text-align: center; text-decoration: none; display: block; margin: 0 auto; max-width: 300px;">View Open Positions</a>
                 </div>
             </div>
 
@@ -431,16 +927,13 @@
                 <div class="slide-content">
                     <h2 style="text-align: center;">Our Work</h2>
                     <div class="gallery-grid">
-                        <div class="gallery-item">📷</div>
-                        <div class="gallery-item">📷</div>
-                        <div class="gallery-item">📷</div>
-                        <div class="gallery-item">📷</div>
-                        <div class="gallery-item">📷</div>
+                        <div class="gallery-item" onclick="openLightbox('photo1.jpg')"><img src="photo1.jpg" alt="Photo 1"></div>
+                        <div class="gallery-item" onclick="openLightbox('photo2.jpg')"><img src="photo2.jpg" alt="Photo 2"></div>
+                        <div class="gallery-item" onclick="openLightbox('photo3.jpg')"><img src="photo3.jpg" alt="Photo 3"></div>
+                        <div class="gallery-item" onclick="openLightbox('photo4.jpg')"><img src="photo4.jpg" alt="Photo 4"></div>
+                        <div class="gallery-item" onclick="openLightbox('photo5.jpg')"><img src="photo5.jpg" alt="Photo 5"></div>
                         <div class="gallery-item">📷</div>
                     </div>
-                    <p style="text-align: center; margin-top: 2rem;">
-                        Placeholder gallery - Placement photoes or something else?
-                    </p>
                 </div>
             </div>
 
@@ -451,7 +944,7 @@
                     <div class="contact-info">
                         <div class="contact-item">
                             <h3>Email</h3>
-                            <p>cdc@psgtech.ac.in</p>
+                            <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f7f0f7d4e4e7f3e0f1f7fcbaf5f7bafdfa">[email&#160;protected]</a></p>
                         </div>
                         <div class="contact-item">
                             <h3>Phone</h3>
@@ -480,9 +973,15 @@
             <button class="indicator" onclick="goToSlide(5)"></button>
             <button class="indicator" onclick="goToSlide(6)"></button>
         </div>
+
+        <!-- Lightbox for Full Screen Image -->
+        <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+            <button class="lightbox-close" onclick="closeLightbox()">×</button>
+            <img src="" alt="Full Screen View" class="lightbox-content" id="lightboxImage">
+        </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let currentSlide = 0;
         const totalSlides = 7;
 
@@ -524,11 +1023,94 @@
             menu.classList.toggle('active');
         }
 
-        // Keyboard navigation
+        // Collapsible functionality - now opens as modal
+        function toggleCollapsible(id) {
+            const card = document.getElementById(id);
+            const content = card.querySelector('.collapsible-content');
+            const header = card.querySelector('.collapsible-header h3');
+            
+            // Create modal overlay if it doesn't exist
+            let modal = document.getElementById('collapsibleModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'collapsibleModal';
+                modal.className = 'modal-overlay';
+                modal.innerHTML = `
+                    <div class="modal-content" onclick="event.stopPropagation()">
+                        <div class="modal-header">
+                            <h3 id="modalTitle"></h3>
+                            <button class="modal-close" onclick="closeCollapsibleModal()">×</button>
+                        </div>
+                        <div class="modal-body" id="modalBody"></div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Close modal when clicking overlay
+                modal.addEventListener('click', closeCollapsibleModal);
+            }
+            
+            // Populate modal with content
+            document.getElementById('modalTitle').textContent = header.textContent;
+            document.getElementById('modalBody').innerHTML = content.innerHTML;
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCollapsibleModal() {
+            const modal = document.getElementById('collapsibleModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'hidden'; // Keep hidden as per original design
+            }
+        }
+
+        // Lightbox functionality
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.src = imageSrc;
+            lightbox.classList.add('active');
+            // Prevent body scrolling when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            // Re-enable body scrolling
+            document.body.style.overflow = 'hidden'; // Keep hidden as per original design
+        }
+
+        // Close lightbox with Escape key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') prevSlide();
-            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closeCollapsibleModal();
+            }
         });
+
+        // Toggle Read More functionality for impact cards
+        function toggleReadMore(button) {
+            const card = button.parentElement;
+            const previewText = card.querySelector('.preview-text');
+            const fullText = card.querySelector('.full-text');
+            
+            if (fullText.style.display === 'none') {
+                previewText.style.display = 'none';
+                fullText.style.display = 'block';
+                button.textContent = 'Read Less';
+                button.classList.add('active');
+            } else {
+                previewText.style.display = 'block';
+                fullText.style.display = 'none';
+                button.textContent = 'Read More';
+                button.classList.remove('active');
+            }
+        }
+
     </script>
 </body>
 </html>
