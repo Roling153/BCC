@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - Your Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #1e40af 50%, #1e293b 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #d1d5db;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .jobs-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .job-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .job-card.active {
+            background: rgba(37, 99, 235, 0.3);
+            border-color: #2563eb;
+        }
+
+        .job-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(37, 99, 235, 0.5);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+        }
+
+        .job-summary {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .job-details {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .job-details.active {
+            display: block;
+        }
+
+        .job-details h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-details h3 {
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #60a5fa;
+        }
+
+        .job-details p {
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .job-details ul {
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-details li {
+            margin-bottom: 0.5rem;
+        }
+
+        .application-form {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.75rem;
+            padding: 2rem;
+        }
+
+        .application-form.active {
+            display: block;
+        }
+
+        .google-form-container {
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .google-form-iframe {
+            display: block;
+            border: none;
+            background: transparent;
+        }
+
+        .application-form h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #e5e7eb;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 0.5rem;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Index_-_Updated.html" class="back-btn">← Back to Home</a>
+
+        <header>
+            <h1>Join Our Team</h1>
+            <p class="subtitle">Explore exciting career opportunities and be part of our mission</p>
+        </header>
+
+        <!-- Jobs List - Auto-generated -->
+        <div class="jobs-list" id="jobsList"></div>
+
+        <!-- Job Details Container - Auto-generated -->
+        <div id="jobDetailsContainer"></div>
+
+        <!-- Application Form - Google Form Embed -->
+        <div class="application-form" id="applicationForm">
+            <h2>Apply for this Position</h2>
+            <div class="google-form-container">
+                <!-- Paste your Google Form iframe here -->
+              <div id="ff-compose"></div>
+                    <script async defer src="https://formfacade.com/include/104992738927170006134/form/1FAIpQLScl79q5Y6Rj4ro2tVZHIQ1cBtd-BVlFSeFHW7h-1xxkh8E0yQ/classic.js?div=ff-compose"></script>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // EDIT JOBS HERE - Add, remove, or modify job postings easily
+        // ============================================================
+        const jobs = [
+            {
+                id: 1,
+                title: "Software Engine",
+                type: "Full-time",
+                location: "Remote",
+                category: "Engineering",
+                summary: "Build scalable applications and work with cutting-edge technologies.",
+                description: "We are seeking a talented Software Engineer to join our dynamic engineering team. You will be responsible for designing, developing, and maintaining high-quality software solutions that power our products and services.",
+                responsibilities: [
+                    "Design and develop scalable web applications using modern technologies",
+                    "Write clean, maintainable, and well-documented code",
+                    "Collaborate with cross-functional teams to define and implement new features",
+                    "Participate in code reviews and contribute to technical discussions",
+                    "Debug and resolve technical issues in production environments",
+                    "Stay updated with emerging technologies and industry best practices"
+                ],
+                required: [
+                    "Bachelor's degree in Computer Science or related field",
+                    "3+ years of experience in software development",
+                    "Strong proficiency in JavaScript, Python, or Java",
+                    "Experience with modern web frameworks (React, Angular, or Vue)",
+                    "Knowledge of database systems (SQL and NoSQL)",
+                    "Excellent problem-solving and communication skills"
+                ],
+                preferred: [
+                    "Experience with cloud platforms (AWS, Azure, or GCP)",
+                    "Knowledge of containerization technologies (Docker, Kubernetes)",
+                    "Familiarity with CI/CD pipelines",
+                    "Open source contribution experience"
+                ],
+                benefits: [
+                    "Competitive salary and equity package",
+                    "Comprehensive health, dental, and vision insurance",
+                    "Flexible work arrangements",
+                    "Professional development opportunities",
+                    "401(k) matching",
+                    "Unlimited PTO"
+                ]
+            },
+            {
+                id: 2,
+                title: "Project Manager",
+                type: "Full-time",
+                location: "Hybrid",
+                category: "Management",
+                summary: "Lead cross-functional teams and drive project success.",
+                description: "We're looking for an experienced Project Manager to lead our strategic initiatives and ensure successful project delivery. You will work closely with stakeholders across the organization to plan, execute, and deliver projects on time and within budget.",
+                responsibilities: [
+                    "Define project scope, goals, and deliverables",
+                    "Develop detailed project plans and timelines",
+                    "Coordinate resources and manage project teams",
+                    "Monitor project progress and manage risks",
+                    "Communicate project status to stakeholders",
+                    "Ensure quality standards are met throughout the project lifecycle"
+                ],
+                required: [
+                    "Bachelor's degree in Business, Management, or related field",
+                    "5+ years of project management experience",
+                    "PMP or equivalent certification preferred",
+                    "Strong leadership and team management skills",
+                    "Excellent communication and stakeholder management abilities",
+                    "Proficiency in project management tools (Jira, Asana, MS Project)"
+                ],
+                preferred: [],
+                benefits: [
+                    "Competitive salary package",
+                    "Health and wellness benefits",
+                    "Hybrid work model",
+                    "Career advancement opportunities",
+                    "Annual performance bonuses"
+                ]
+            },
+            {
+                id: 3,
+                title: "Data Analyst",
+                type: "Contract",
+                location: "On-site",
+                category: "Analytics",
+                summary: "Transform data into actionable insights for business growth.",
+                description: "Join our data team as a Data Analyst where you'll transform complex datasets into actionable insights that drive business decisions. This is a contract position with potential for full-time conversion.",
+                responsibilities: [
+                    "Collect, analyze, and interpret large datasets",
+                    "Create reports and dashboards for stakeholders",
+                    "Identify trends and patterns in data",
+                    "Support data-driven decision making across the organization",
+                    "Collaborate with teams to understand data requirements",
+                    "Maintain data quality and integrity"
+                ],
+                required: [
+                    "Bachelor's degree in Statistics, Mathematics, or related field",
+                    "2+ years of data analysis experience",
+                    "Strong proficiency in SQL and Excel",
+                    "Experience with data visualization tools (Tableau, Power BI)",
+                    "Knowledge of statistical analysis methods",
+                    "Strong analytical and problem-solving skills"
+                ],
+                preferred: [],
+                benefits: []
+            },
+            {
+                id: 4,
+                title: "UX Designer",
+                type: "Full-time",
+                location: "Remote",
+                category: "Design",
+                summary: "Create intuitive and beautiful user experiences.",
+                description: "We're seeking a creative UX Designer to craft intuitive and engaging user experiences for our digital products. You'll work closely with product managers and developers to bring ideas to life.",
+                responsibilities: [
+                    "Conduct user research and usability testing",
+                    "Create wireframes, prototypes, and high-fidelity designs",
+                    "Develop user flows and information architecture",
+                    "Collaborate with developers to ensure design implementation",
+                    "Maintain design systems and style guides",
+                    "Advocate for user-centered design principles"
+                ],
+                required: [
+                    "Bachelor's degree in Design or related field",
+                    "3+ years of UX design experience",
+                    "Portfolio demonstrating UX/UI design skills",
+                    "Proficiency in design tools (Figma, Sketch, Adobe XD)",
+                    "Understanding of responsive and mobile design",
+                    "Strong communication and presentation skills"
+                ],
+                preferred: [],
+                benefits: []
+            },
+            {
+                id: 5,
+                title: "Marketing Specialist",
+                type: "Full-time",
+                location: "Hybrid",
+                category: "Marketing",
+                summary: "Drive brand awareness and customer engagement strategies.",
+                description: "We're looking for a creative Marketing Specialist to develop and execute marketing campaigns that drive brand awareness and customer engagement.",
+                responsibilities: [
+                    "Develop and execute marketing campaigns across multiple channels",
+                    "Create compelling content for social media, email, and web",
+                    "Analyze campaign performance and optimize strategies",
+                    "Manage brand presence and messaging",
+                    "Collaborate with sales and product teams",
+                    "Monitor market trends and competitor activities"
+                ],
+                required: [
+                    "Bachelor's degree in Marketing or related field",
+                    "2+ years of marketing experience",
+                    "Strong writing and content creation skills",
+                    "Experience with digital marketing tools and analytics",
+                    "Knowledge of SEO and SEM best practices",
+                    "Creative thinking and attention to detail"
+                ],
+                preferred: [],
+                benefits: []
+            },
+            {
+                id: 6,
+                title: "DevOps Engineer",
+                type: "Full-time",
+                location: "Remote",
+                category: "Engineering",
+                summary: "Optimize infrastructure and deployment pipelines.",
+                description: "Join our infrastructure team as a DevOps Engineer to build and maintain scalable, reliable systems that power our applications.",
+                responsibilities: [
+                    "Design and implement CI/CD pipelines",
+                    "Manage cloud infrastructure and deployment processes",
+                    "Monitor system performance and reliability",
+                    "Automate infrastructure provisioning and configuration",
+                    "Implement security best practices",
+                    "Troubleshoot and resolve production issues"
+                ],
+                required: [
+                    "Bachelor's degree in Computer Science or related field",
+                    "3+ years of DevOps experience",
+                    "Strong knowledge of cloud platforms (AWS, Azure, or GCP)",
+                    "Experience with containerization (Docker, Kubernetes)",
+                    "Proficiency in scripting languages (Python, Bash)",
+                    "Understanding of networking and security principles"
+                ],
+                preferred: [],
+                benefits: []
+            }
+            
+        ];
+
+        // ============================================================
+        // AUTO-GENERATE JOB CARDS AND DETAILS
+        // ============================================================
+        
+        function renderJobs() {
+            const jobsList = document.getElementById('jobsList');
+            const jobDetailsContainer = document.getElementById('jobDetailsContainer');
+            
+            // Clear existing content
+            jobsList.innerHTML = '';
+            jobDetailsContainer.innerHTML = '';
+            
+            // Generate job cards and details
+            jobs.forEach(job => {
+                // Create job card
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.onclick = () => showJob(job.id);
+                card.innerHTML = `
+                    <div class="job-title">${job.title}</div>
+                    <div class="job-meta">
+                        <span class="tag">${job.type}</span>
+                        <span class="tag">${job.location}</span>
+                        <span class="tag">${job.category}</span>
+                    </div>
+                    <p class="job-summary">${job.summary}</p>
+                `;
+                jobsList.appendChild(card);
+                
+                // Create job details
+                const details = document.createElement('div');
+                details.className = 'job-details';
+                details.id = `job${job.id}`;
+                
+                let detailsHTML = `
+                    <h2>${job.title}</h2>
+                    <div class="job-meta">
+                        <span class="tag">${job.type}</span>
+                        <span class="tag">${job.location}</span>
+                        <span class="tag">${job.category}</span>
+                    </div>
+                    <h3>Job Description</h3>
+                    <p>${job.description}</p>
+                    <h3>Key Responsibilities</h3>
+                    <ul>
+                `;
+                
+                job.responsibilities.forEach(resp => {
+                    detailsHTML += `<li>${resp}</li>`;
+                });
+                
+                detailsHTML += `
+                    </ul>
+                    <h3>Required Qualifications</h3>
+                    <ul>
+                `;
+                
+                job.required.forEach(req => {
+                    detailsHTML += `<li>${req}</li>`;
+                });
+                
+                detailsHTML += `</ul>`;
+                
+                if (job.preferred && job.preferred.length > 0) {
+                    detailsHTML += `<h3>Preferred Qualifications</h3><ul>`;
+                    job.preferred.forEach(pref => {
+                        detailsHTML += `<li>${pref}</li>`;
+                    });
+                    detailsHTML += `</ul>`;
+                }
+                
+                if (job.benefits && job.benefits.length > 0) {
+                    detailsHTML += `<h3>Benefits</h3><ul>`;
+                    job.benefits.forEach(benefit => {
+                        detailsHTML += `<li>${benefit}</li>`;
+                    });
+                    detailsHTML += `</ul>`;
+                }
+                
+                details.innerHTML = detailsHTML;
+                jobDetailsContainer.appendChild(details);
+            });
+        }
+
+        function showJob(jobId) {
+            // Hide all job details and form
+            const allDetails = document.querySelectorAll('.job-details');
+            allDetails.forEach(detail => detail.classList.remove('active'));
+            document.getElementById('applicationForm').classList.remove('active');
+
+            // Remove active class from all job cards
+            const allCards = document.querySelectorAll('.job-card');
+            allCards.forEach(card => card.classList.remove('active'));
+
+            // Show selected job details
+            const selectedJob = document.getElementById('job' + jobId);
+            selectedJob.classList.add('active');
+
+            // Show application form
+            document.getElementById('applicationForm').classList.add('active');
+
+            // Add active class to clicked card
+            const cards = document.querySelectorAll('.job-card');
+            cards[jobId - 1].classList.add('active');
+
+            // Scroll to job details
+            selectedJob.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Initialize the page
+        renderJobs();
+    </script>
+</body>
+</html>
